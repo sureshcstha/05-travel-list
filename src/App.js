@@ -19,6 +19,12 @@ function App() {
     );
   }
 
+  function handleClearList() {
+    const confirmed = window.confirm('Are you sure you want to delete all items?');
+
+    if(confirmed) setItems([]);
+  }
+
   return (
     <div className="App">
       <Logo />
@@ -27,6 +33,7 @@ function App() {
         items={items}
         onDeleteItem={handleDeleteItem}
         onToggleItem={handleToggleItem}
+        onClearList={handleClearList}
       />
       <Stats items={items} />
     </div>
@@ -78,7 +85,7 @@ function Form({ onAddItems }) {
   );
 }
 
-function PackingList({ items, onDeleteItem, onToggleItem }) {
+function PackingList({ items, onDeleteItem, onToggleItem, onClearList }) {
   const [sortBy, setSortBy] = useState("input");
 
   let sortedItems;
@@ -114,6 +121,7 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
           <option value="description">Sort by description</option>
           <option value="packed">Sort by packed status</option>
         </select>
+        <button onClick={onClearList}>Clear list</button>
       </div>
     </div>
   );
@@ -139,7 +147,7 @@ function Stats({ items }) {
   if (!items.length)
     return (
       <p className="stats">
-        <em>Start adding some items to your packing list</em>
+        <em>Start adding some items to your packing list 🚀</em>
       </p>
     );
 
@@ -151,8 +159,8 @@ function Stats({ items }) {
     <footer className="stats">
       <em>
         {percentage === 100
-          ? "You got everything! Ready to go"
-          : `You have ${numItems} items on your list, and you already packed ${numPacked} (${percentage}%)`}
+          ? "You got everything! Ready to go ✈️"
+          : ` 💼 You have ${numItems} items on your list, and you already packed ${numPacked} (${percentage}%)`}
       </em>
     </footer>
   );
